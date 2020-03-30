@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <constant name="struts.i18n.encoding" value="UTF-8"></constant>
+    <constant name="struts.objectFactory" value="spring"></constant>
+    <!--struts2.5 开启通配符+占位符模式，2.3之前默认开启-->
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+    <constant name="struts.devMode" value="false"></constant>
+
+    <package name="defaultPackage" extends="struts-default">
+        <!--允许动态调用方法-->
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <!--根据第一个通配符匹配方法 如 addProduct 调用productAction的add()方法-->
+        <action name="*Product" class="productActionBean" method="{1}">
+            <result name="listProduct">WEB-INF/jsp/product/listProduct.jsp</result>
+            <!--重定向-->
+            <result name="listProductAction" type="redirect">listProduct</result>
+            <result name="editProduct">WEB-INF/jsp/product/editProduct.jsp</result>
+            <result name="searchResult">WEB-INF/jsp/product/listProduct.jsp</result>
+            <result name="infoProduct">WEB-INF/jsp/product/infoProduct.jsp</result>
+        </action>
+
+        <action name="*Category" class="CategoryActionBean" method="{1}">
+            <result name="listCategory">WEB-INF/jsp/category/listCategory.jsp</result>
+            <result name="listCategoryAction" type="redirect">listCategory</result>
+            <result name="editCategory">WEB-INF/jsp/category/editCategory.jsp</result>
+        </action>
+        <action name="*User" class="UserActionBean" method="{1}">
+            <result name="listUser">WEB-INF/jsp/user/listUser.jsp</result>
+            <result name="listUserAction" type="redirect">listUser</result>
+            <result name="editUser">WEB-INF/jsp/user/editUser.jsp</result>
+        </action>
+
+        <action name="*Order" class="OrderActionBean" method="{1}">
+            <result name="listOrder">WEB-INF/jsp/order/listOrder.jsp</result>
+            <result name="listOrderAction" type="redirect">listOrder</result>
+        </action>
+        <action name="*OrderItem" class="OrderItemActionBean" method="{1}">
+            <result name="payPage">WEB-INF/jsp/orderitem/payPage.jsp</result>
+            <result name="home">index.jsp</result>
+        </action>
+        <action name="*Basic" class="BasicActionBean" method="{1}">
+            <result name="registerUser">WEB-INF/jsp/user/registerUser.jsp</result>
+            <result name="index">index.jsp</result>
+            <result name="registerError">WEB-INF/jsp/user/registerUser.jsp</result>
+            <result name="registerSuccess">WEB-INF/jsp/user/registerSuccess.jsp</result>
+            <result name="loginUser">WEB-INF/jsp/user/loginUser.jsp</result>
+            <result name="loginError">WEB-INF/jsp/user/loginUser.jsp</result>
+            <result name="loginSuccess">index.jsp</result>
+            <result name="loginOut" type="redirect" >homeBasic</result>
+        </action>
+    </package>
+</struts>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="pojo">
+    <class name="OrderItem" table="orderItem_">
+        <id name="id" column="id">
+            <generator class="native">
+            </generator>
+        </id>
+        <property name="number" column="number"></property>
+
+        <many-to-one name="user" class="User" lazy="false" cascade="save-update,persist" column="uid"></many-to-one>
+        <many-to-one name="product" class="Product" lazy="false" cascade="save-update,persist" column="pid"></many-to-one>
+        <many-to-one name="order" class="Order" lazy="false" cascade="save-update,persist" column="oid"></many-to-one>
+    </class>
+</hibernate-mapping>

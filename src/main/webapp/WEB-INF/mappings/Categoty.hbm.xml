@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="pojo">
+    <class name="Category" table="category_">
+        <id name="id" column="id">
+            <generator class="native">
+            </generator>
+        </id>
+        <property name="name" />
+        <set name="products" lazy="false" cascade="save-update,persist">
+            <key column="cid" not-null="false"></key>
+            <one-to-many class="Product"></one-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="pojo">
+    <class name="Product" table="product_">
+        <id name="id" column="id">
+            <generator class="native">
+            </generator>
+        </id>
+        <property name="name" />
+        <property name="price" />
+        <property name="count"/>
+        <!--name：Product类中的属性
+            calss：实体类
+            column：指向category_表的外键
+            lazy:flase 延迟加载关闭。会取完整的category信息，如果不设置，可能取不出，除了外键id的其它信息
+            cascade:级联设置
+        -->
+        <many-to-one name="category" class="Category" lazy="false" cascade="save-update,persist" column="cid"></many-to-one>
+    </class>
+</hibernate-mapping>

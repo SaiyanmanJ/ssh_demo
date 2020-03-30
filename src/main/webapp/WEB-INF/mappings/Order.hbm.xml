@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="pojo">
+    <class name="Order" table="order_">
+        <id name="id" column="id">
+            <generator class="native">
+            </generator>
+        </id>
+        <property name="orderCode" column="orderCode"/>
+        <property name="address" column="address" />
+        <property name="post" column="post"></property>
+        <property name="receiver" column="receiver"></property>
+        <property name="mobile" column="mobile"></property>
+        <property name="userMessage" column="userMessage"></property>
+        <property name="createDate" column="createDate"></property>
+        <property name="payDate" column="payDate"></property>
+        <property name="deliveryDate" column="deliveryDate"></property>
+        <property name="confirmDate" column="confirmDate"></property>
+        <property name="status" column="status"></property>
+
+        <many-to-one name="user" class="User" lazy="false" cascade="save-update,persist" column="uid"></many-to-one>
+    </class>
+</hibernate-mapping>
