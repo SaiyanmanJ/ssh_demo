@@ -41,6 +41,9 @@
         </action>
         <action name="*OrderItem" class="OrderItemActionBean" method="{1}">
             <result name="payPage">WEB-INF/jsp/orderitem/payPage.jsp</result>
+            <result name="infoProduct">WEB-INF/jsp/product/infoProduct.jsp</result>
+            <result name="cartPage">WEB-INF/jsp/orderitem/cartPage.jsp</result>
+            <result name="deleteSuccess" type="redirect">cartOrderItem</result>
             <result name="home">index.jsp</result>
         </action>
         <action name="*Basic" class="BasicActionBean" method="{1}">

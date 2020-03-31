@@ -19,7 +19,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     UserDAO userDAO;
     OrderDAO orderDAO;
     List<OrderItem> orderItems;
-
+    User user;
     @Override
     public void fill(List<Order> orders) {
         for (Order order : orders) {
@@ -48,7 +48,13 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public List<OrderItem> listByUser(User user) {
-        return orderItemDAO.listByUser(user);
+        return orderItemDAO.listByUser(userDAO.get(user.getId()));
+    }
+
+    @Override
+    public List<OrderItem> listByUserWithNoOrder(User user) {
+
+        return orderItemDAO.listByUserWithNoOrder(userDAO.get(user.getId()));
     }
 
     @Override
@@ -62,10 +68,10 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public void add(int pid,int uid,int num) {
-        User user = userDAO.get(uid);
+    public List<OrderItem> add(int pid,int uid,int num) {
         //判断该用户未创建订单的订单项/中的产品/和这次产品是否相同
         boolean haveSeamProduct=false;
+        user = userDAO.get(uid);
         List<OrderItem> orderItems = orderItemDAO.listByUser(user);
         if(!orderItems.isEmpty()){
             for(OrderItem oi:orderItems){
@@ -84,8 +90,9 @@ public class OrderItemServiceImpl implements OrderItemService {
             orderItem.setProduct(product);
             orderItem.setNumber(num);
             orderItemDAO.add(orderItem);
+            orderItems.add(orderItem);
         }
-
+        return orderItems;
     }
     @Override
     public void delete(OrderItem orderItem) {

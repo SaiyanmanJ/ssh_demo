@@ -1,8 +1,11 @@
 package action;
 
+import com.opensymphony.xwork2.ActionContext;
 import dao.impl.OrderItemDAOImpl;
 import org.aspectj.weaver.ast.Or;
 import pojo.Order;
+import pojo.OrderItem;
+import pojo.Product;
 import pojo.User;
 import service.OrderItemService;
 import service.OrderService;
@@ -16,7 +19,10 @@ public class OrderAction {
     Order order;
     List<Order> orders;
     User user;
-
+    Product product;
+    int num;
+    String msg;
+    List<OrderItem> orderItems;
     OrderItemService orderItemService;
 
     public String list(){
@@ -67,5 +73,37 @@ public class OrderAction {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

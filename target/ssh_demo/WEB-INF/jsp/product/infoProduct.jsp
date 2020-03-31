@@ -18,6 +18,15 @@
                 $(".buyLink").attr("href","buyOrderItem?product.id="+productId+"&num="+num);
             }
         });
+        $(".addCart").click(function () {
+            var num = $(".buyNumber").val();
+            var productId = ${product.id};
+            if(num<1){
+                alert("加入购物车的商品数量不能小于1件");
+            }else{
+                $(".addCart").attr("href","addCartOrderItem?product.id="+productId+"&num="+num);
+            }
+        });
     });
 </script>
 <body>
@@ -39,7 +48,7 @@
             <input class="buyNumber" type="number" min="1" value="1">
             <a class="buyLink" href="#"><button>立即购买</button></a>
         </td>
-        <td><a href="buyOrderItem?product.id=${product.id}"><button>加入购物车</button></a></td>
+        <td><a class="addCart" href="#"><button>加入购物车</button></a></td>
     </tr>
 </table>
 

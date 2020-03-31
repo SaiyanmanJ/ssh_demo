@@ -1,5 +1,6 @@
 package service;
 
+import org.aspectj.weaver.ast.Or;
 import pojo.Order;
 import pojo.OrderItem;
 import pojo.Product;
@@ -13,9 +14,10 @@ public interface OrderItemService {
     public void fill(Order order);
     public List<OrderItem> list();
     public List<OrderItem> listByUser(User user);
+    public List<OrderItem> listByUserWithNoOrder(User user);
     public List<OrderItem> listByOrder(Order order);
     public OrderItem get(int id);
-    public void add(int pid,int uid,int num);
+    public List<OrderItem> add(int pid,int uid,int num);
     public void delete(OrderItem OrderItem);
     public void update(OrderItem OrderItem);
 }

@@ -43,10 +43,10 @@
 
     <bean name="OrderActionBean" class="action.OrderAction">
         <property name="orderService" ref="orderServiceImpl"></property>
-        <property name="orderItemService" ref="orderItemServiceImpl"></property>
     </bean>
     <bean name="orderServiceImpl" class="service.impl.OrderServiceImpl">
         <property name="orderDAO" ref="orderDAOImpl"></property>
+        <property name="orderItemDAO" ref="orderItemDAOImpl"></property>
     </bean>
     <bean name="orderDAOImpl" class="dao.impl.OrderDAOImpl">
         <property name="sessionFactory" ref="sessionFactory"></property>
@@ -54,6 +54,7 @@
 
     <bean name="OrderItemActionBean" class="action.OrderItemActon">
         <property name="orderItemService" ref="orderItemServiceImpl"></property>
+        <property name="productService" ref="productServiceImpl"></property>
     </bean>
 
     <bean name="orderItemServiceImpl" class="service.impl.OrderItemServiceImpl">

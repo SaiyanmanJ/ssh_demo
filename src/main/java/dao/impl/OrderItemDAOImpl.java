@@ -15,7 +15,6 @@ import java.util.List;
 public class OrderItemDAOImpl extends HibernateTemplate implements OrderItemDAO {
 
     OrderItem OrderItem;
-
     @Override
     public List<OrderItem> list() {
         return (List<OrderItem>) findByCriteria(DetachedCriteria.forClass(OrderItem.class));
@@ -28,6 +27,11 @@ public class OrderItemDAOImpl extends HibernateTemplate implements OrderItemDAO 
     @Override
     public List<OrderItem> listByOrder(Order order) {
         return (List<OrderItem>) findByCriteria(DetachedCriteria.forClass(OrderItem.class).add(Restrictions.eq("order",order)));
+    }
+
+    @Override
+    public List<OrderItem> listByUserWithNoOrder(User user) {
+        return (List<OrderItem>) findByCriteria(DetachedCriteria.forClass(OrderItem.class).add(Restrictions.eq("user",user)).add(Restrictions.isNull("order")));
     }
 
     @Override
@@ -50,4 +54,11 @@ public class OrderItemDAOImpl extends HibernateTemplate implements OrderItemDAO 
         super.update(orderItem);
     }
 
+    public pojo.OrderItem getOrderItem() {
+        return OrderItem;
+    }
+
+    public void setOrderItem(pojo.OrderItem orderItem) {
+        OrderItem = orderItem;
+    }
 }
