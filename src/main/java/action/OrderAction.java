@@ -12,7 +12,10 @@ import service.OrderService;
 import service.UserService;
 
 import java.security.PublicKey;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class OrderAction {
     OrderService orderService;
@@ -22,8 +25,23 @@ public class OrderAction {
     Product product;
     int num;
     String msg;
+    float total;
     List<OrderItem> orderItems;
     OrderItemService orderItemService;
+
+    public String alipay(){
+        return "alipay";
+    }
+
+    public String create(){
+        List<OrderItem> ois = (List<OrderItem>) ActionContext.getContext().getSession().get("orderItems");
+        if(ois==null){
+            return "login";
+        }
+        user = (User)ActionContext.getContext().getSession().get("user");
+        total = orderService.createOrder(ois,user);
+        return "alipayPage";
+    }
 
     public String list(){
         orders=orderService.list();
@@ -106,4 +124,14 @@ public class OrderAction {
     public void setMsg(String msg) {
         this.msg = msg;
     }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
+
+
 }

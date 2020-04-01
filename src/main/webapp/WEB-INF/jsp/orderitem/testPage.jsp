@@ -126,7 +126,7 @@
                     params += "&oiids="+oiid;
                 }
             });
-            params = params.substring(1);
+            params = params.substring(1);//
             location.href="forebuy?"+params;
         });
 

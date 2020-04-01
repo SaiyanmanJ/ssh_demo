@@ -1,6 +1,7 @@
 package service;
 
 import pojo.Order;
+import pojo.OrderItem;
 import pojo.User;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public interface OrderService {
     public void add(Order Order);
     public void delete(Order Order);
     public void update(Order Order);
+    public float createOrder(List<OrderItem> ois,User user);
 
     public List<Order> searchByKeyword(String keyword);
 

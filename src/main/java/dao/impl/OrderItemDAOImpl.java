@@ -51,7 +51,7 @@ public class OrderItemDAOImpl extends HibernateTemplate implements OrderItemDAO 
 
     @Override
     public void update(OrderItem orderItem) {
-        super.update(orderItem);
+        super.merge(orderItem);
     }
 
     public pojo.OrderItem getOrderItem() {

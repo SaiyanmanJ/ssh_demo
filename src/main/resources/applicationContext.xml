@@ -43,10 +43,12 @@
 
     <bean name="OrderActionBean" class="action.OrderAction">
         <property name="orderService" ref="orderServiceImpl"></property>
+        <property name="orderItemService" ref="orderItemServiceImpl"></property>
     </bean>
     <bean name="orderServiceImpl" class="service.impl.OrderServiceImpl">
         <property name="orderDAO" ref="orderDAOImpl"></property>
         <property name="orderItemDAO" ref="orderItemDAOImpl"></property>
+        <property name="userDAO" ref="userDAOImpl"></property>
     </bean>
     <bean name="orderDAOImpl" class="dao.impl.OrderDAOImpl">
         <property name="sessionFactory" ref="sessionFactory"></property>
@@ -107,6 +109,7 @@
             <tx:method name="update*"  propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="list*"  propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="manage*"  propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="create*"  propagation="REQUIRED" rollback-for="Exception"></tx:method>
         </tx:attributes>
     </tx:advice>
     <aop:config>

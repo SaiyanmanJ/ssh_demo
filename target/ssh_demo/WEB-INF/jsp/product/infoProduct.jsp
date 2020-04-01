@@ -15,7 +15,7 @@
                 alert("购买商品数量大于1哦，不大于1您买空气吗");
             }else{
                 //添加购买数量的属性
-                $(".buyLink").attr("href","buyOrderItem?product.id="+productId+"&num="+num);
+                $(".buyLink").attr("href","buyOneOrderItem?product.id="+productId+"&num="+num);
             }
         });
         $(".addCart").click(function () {

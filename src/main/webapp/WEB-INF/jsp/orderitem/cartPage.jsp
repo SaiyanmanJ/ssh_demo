@@ -9,38 +9,79 @@
 <%@include file="/WEB-INF/jsp/basic/basicHeader.jsp" %>
 <html>
 <style type="text/css">
-    input{border: 0px}
+    input {
+        border: 0px
+    }
 </style>
 <script>
     $(function () {
-        var isChecked = false;
-        $(".selectAllItem").click(function () {
-            isChecked = !isChecked;
-            if(isChecked)
-                $(".orderItem").prop("checked",true);
-            else
-                $(".orderItem").prop("checked",false);
+        $(".createOrder").click(function () {
+            var params="";
+            $(".orderItem:checked").each(function () {
+                params += "&oiids="+ $(this).attr("oiid");
+            });
+            params = params.substring(1);//截取1-n,去掉首字符&;
+            location.href = "buyOrderItem?"+params;
+        });
+
+        $(".selectAllItem").click(function () {//全选
+            var isChecked = $(this).prop("checked");
+            $(".orderItem").prop("checked", isChecked);
             calculateSumNumberAndPrice();
             return true;
         });
         $(".orderItem").click(function () {
+            var isAllCheck = true;
+            $(".orderItem").each(function () {//如果有未选中的，就取消全选框
+                if ($(this).prop("checked") == false) {
+                    isAllCheck = false;
+                }
+            });
+            $(".selectAllItem").prop("checked", isAllCheck);
             calculateSumNumberAndPrice();
         });
+        $(".oiNumber").click(function () {
+            var oiid = $(this).attr("oiid");
+            var productPrice = $(".productPrice[oiid=" + oiid + "]").text();
+            var num = $(".oiNumber[oiid=" + oiid + "]").val();
+            var ordetItemPrice = new Number(productPrice) * new Number(num);
+            $(".orderItemPrice[oiid=" + oiid + "]").text("" + ordetItemPrice.toFixed(2));
+            calculateSumNumberAndPrice();
+            var pid = $(this).attr("pid");
+            orderItemUpdate(oiid, pid, num);
+        });
+
         function calculateSumNumberAndPrice() {
-            var sumPrice=0;
-            var totalNumber=0;
-            var orderItemPrice = 0;
-            $(".orderItem").each(function () {
+            var sumPrice = 0;
+            var totalNumber = 0;
+            $(".orderItem:checked").each(function () {
                 var oiid = $(this).attr("oiid");
-                orderItemPrice = $(".orderItemPrice[oiid="+oiid+"]").text();
+                var orderItemPrice = $(".orderItemPrice[oiid =" + oiid + "]").text();
                 sumPrice += new Number(orderItemPrice);
-                console.log(orderItemPrice);
-                var num = $(".oiNumber[oiid="+oiid+"]").val();
+                var num = $(".oiNumber[oiid=" + oiid + "]").val();
                 totalNumber += new Number(num);
-                console.log(totalNumber);
             });
-            $("span.cartSumNumber").html("￥"+totalNumber);
-            $("span.cartSumPrice").html("￥"+sumPrice);
+            if (totalNumber > 0) {//购物数量>=1 结算按钮可按
+                $(".createOrder").prop("disabled", false);
+            } else {
+                $(".createOrder").prop("disabled", true);
+            }
+            $("span.cartSumNumber").html("￥" + totalNumber);
+            $("span.cartSumPrice").html("￥" + sumPrice.toFixed(2));
+        }
+
+        function orderItemUpdate(oiid, pid, num) {
+            var page = "updateOrderItem";
+            $.post(
+                page,
+                {"product.id": pid, "orderItem.id": oiid, "num": num},
+                function (result) {
+                    alert(result);
+                    if (result != "success") {
+                        location.href = "login.jsp";
+                    }
+                }
+            )
         }
     });
 </script>
@@ -49,43 +90,42 @@
 </head>
 <body>
 <br>
-<form action="createOrder" method="post">
-    <table align="center" border="1px" cellspacing="0">
-        <thead>
-        <tr>
-            <th><input class="selectAllItem" type="checkbox">全选</th>
-            <th>商品名</th>
-            <th>单价</th>
-            <th>数量</th>
-            <th>总计</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${orderItems}" var="oi">
+<table align="center" border="1px" cellspacing="0">
+    <thead>
+    <tr>
+        <th><input class="selectAllItem" type="checkbox">全选</th>
+        <th>商品名</th>
+        <th>单价</th>
+        <th>数量</th>
+        <th>总计</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${orderItems}" var="oi">
 
-            <tr>
-                <td><input oiid=""${oi.id} class="orderItem" type="checkbox"></td>
-                <td>${oi.product.name}</td>
-                <td><span oiid="${oi.id}" class="productPrice">${oi.product.price}</span></td>
-                <td><input class="oiNumber" oiid=""${oi.id} min="1" type="number" autocomplete="off" value="${oi.number}"></td>
-                <td>
-                    <span>￥</span>
-                    <span class="orderItemPrice" oiid="${oi.id}" pid="${oi.product.id}" >
-                        <fmt:formatNumber type="number" value="${oi.product.price*oi.number}"/>
+        <tr>
+            <td><input oiid="${oi.id}" class="orderItem" type="checkbox"></td>
+            <td>${oi.product.name}</td>
+            <td><span oiid="${oi.id}" class="productPrice">${oi.product.price}</span></td>
+            <td><input class="oiNumber" type="number" min="1" pid="${oi.product.id}" oiid="${oi.id}"
+                       value="${oi.number}"></td>
+            <td>
+                <span>￥</span>
+                <span class="orderItemPrice" oiid="${oi.id}" pid="${oi.product.id}">
+                        <fmt:formatNumber type="number" minFractionDigits="2" value="${oi.product.price*oi.number}"/>
                     </span>
-                </td>
-                <td><a href="deleteOrderItem?orderItem.id=${oi.id}">删除</a></td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-    <div align="center">
-        <span>已选商品：<span class="cartSumNumber">0</span>件</span>
-        <span>合计(不含运费)：</span>
-        <span class="cartSumPrice">￥0.00</span>
-        <button type="submit" class="createOrder">结算</button>
-    </div>
-</form>
+            </td>
+            <td><a href="deleteOrderItem?orderItem.id=${oi.id}">删除</a></td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
+<div align="center">
+    <span>已选商品：<span class="cartSumNumber">0</span>件</span>
+    <span>合计(不含运费)：</span>
+    <span class="cartSumPrice">￥0.00</span>
+    <button type="submit" disabled="disabled" class="createOrder">结算</button>
+</div>
 </body>
 </html>

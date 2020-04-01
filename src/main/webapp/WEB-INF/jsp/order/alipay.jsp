@@ -9,9 +9,14 @@
 <%@include file="/WEB-INF/jsp/basic/basicHeader.jsp"%>
 <html>
 <head>
-    <title>payPage</title>
+    <title>alipay</title>
 </head>
 <body>
 <h1 align="center">这里是支付页面</h1>
+<div align="center">
+    <span>${order.id}</span>
+    <span>扫一扫付款(元)</span>
+    <span><fmt:formatNumber value="${total}" type="number" minFractionDigits="2"/></span>
+</div>
 </body>
 </html>

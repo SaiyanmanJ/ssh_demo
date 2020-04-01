@@ -9,6 +9,7 @@ import service.OrderService;
 import service.ProductService;
 import service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderItemActon {
@@ -21,8 +22,22 @@ public class OrderItemActon {
     User user;
     int num;
     String msg;
-
+    int[] oiids;
+    int oiid;
+    float total;
     public String buy(){
+        total=0;
+        orderItems = new ArrayList<>();
+        for (int oiid:oiids){
+            orderItem = orderItemService.get(oiid);
+            total += orderItem.getNumber()*orderItem.getProduct().getPrice();
+            orderItems.add(orderItemService.get(oiid));
+        }
+        ActionContext.getContext().getSession().put("orderItems",orderItems);
+        return "buyPage";
+    }
+
+    public String buyOne(){
         user = (User)ActionContext.getContext().getSession().get("user");
         if(user==null){
             msg="您还没登录就想买东西!!!？？？白嫖吗，不存在的";
@@ -31,8 +46,8 @@ public class OrderItemActon {
             msg="";
         }
         orderItems = orderItemService.add(product.getId(),user.getId(),num);
-
-        return "payPage";
+        oiid = orderItems.get(0).getId();
+        return "redirectBuy";
     }
 
     public String addCart(){
@@ -43,6 +58,7 @@ public class OrderItemActon {
         }else{
             msg="已加入购物车";
         }
+        orderItems.clear();
         orderItems = orderItemService.add(product.getId(),user.getId(),num);
         product = productService.get(product.getId());
         return "infoProduct";
@@ -58,6 +74,16 @@ public class OrderItemActon {
         orderItems = orderItemService.listByUserWithNoOrder(user);
         return "cartPage";
     }
+
+    public String update(){
+        orderItem = orderItemService.get(orderItem.getId());
+        if(orderItem.getProduct().getId()==product.getId()){
+            orderItem.setNumber(num);
+            orderItemService.update(orderItem);
+        }
+        return "success";
+    }
+
 
     public String delete(){
         orderItemService.delete(orderItem);
@@ -126,5 +152,29 @@ public class OrderItemActon {
 
     public void setProductService(ProductService productService) {
         this.productService = productService;
+    }
+
+    public int[] getOiids() {
+        return oiids;
+    }
+
+    public void setOiids(int[] oiids) {
+        this.oiids = oiids;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
+
+    public int getOiid() {
+        return oiid;
+    }
+
+    public void setOiid(int oiid) {
+        this.oiid = oiid;
     }
 }

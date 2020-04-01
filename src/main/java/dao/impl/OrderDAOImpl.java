@@ -49,4 +49,12 @@ public class OrderDAOImpl extends HibernateTemplate implements OrderDAO {
     public List<Order> listByKeyword(String keyword) {
         return (List<Order>) findByCriteria(DetachedCriteria.forClass(Order.class).add(Restrictions.like("name",keyword)));
     }
+
+    public pojo.Order getOrder() {
+        return Order;
+    }
+
+    public void setOrder(pojo.Order order) {
+        Order = order;
+    }
 }

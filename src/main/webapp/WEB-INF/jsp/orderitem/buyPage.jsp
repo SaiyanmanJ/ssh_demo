@@ -9,9 +9,10 @@
 <%@include file="/WEB-INF/jsp/basic/basicHeader.jsp" %>
 <html>
 <head>
-    <title>payPage</title>
+    <title>buyPage</title>
 </head>
 <body>
+<br>
 <form action="createOrder" method="post">
     <table align="center" border="1px" cellspacing="0">
         <thead>
