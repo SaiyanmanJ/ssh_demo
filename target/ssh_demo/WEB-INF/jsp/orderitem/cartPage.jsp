@@ -31,11 +31,13 @@
             return true;
         });
         $(".orderItem").click(function () {
+            var isAllCheck = true;
             $(".orderItem").each(function () {//如果有未选中的，就取消全选框
                 if ($(this).prop("checked") == false) {
-                    $(".selectAllItem").prop("checked", false);
+                    isAllCheck = false;
                 }
             });
+            $(".selectAllItem").prop("checked", isAllCheck);
             calculateSumNumberAndPrice();
         });
         $(".oiNumber").click(function () {
@@ -99,7 +101,7 @@
         <th>操作</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="cartList">
     <c:forEach items="${orderItems}" var="oi">
 
         <tr>

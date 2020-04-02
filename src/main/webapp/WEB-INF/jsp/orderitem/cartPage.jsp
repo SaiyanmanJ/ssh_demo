@@ -101,7 +101,7 @@
         <th>操作</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="cartList">
     <c:forEach items="${orderItems}" var="oi">
 
         <tr>

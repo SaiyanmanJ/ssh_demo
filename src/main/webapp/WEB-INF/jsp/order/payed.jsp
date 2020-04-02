@@ -9,15 +9,16 @@
 <%@include file="/WEB-INF/jsp/basic/basicHeader.jsp"%>
 <html>
 <head>
-    <title>alipay</title>
+    <title>payedPage</title>
 </head>
 <body>
-<h1 align="center">这里是支付页面</h1>
+<h1 align="center">您已成功付款</h1>
 <div align="center">
-    <span>${order.id}</span>
-    <span>扫一扫付款(元)</span>
-    <span><fmt:formatNumber value="${order.total}" type="number" minFractionDigits="2"/></span>
-    <a href="payedOrder?order.id=${order.id}&order.total=${order.total}"><button>立即支付</button></a>
+    <ul>
+        <li>收货地址：${order.address} ${order.receiver} ${order.mobile}</li>
+        <li>实付款：<span><fmt:formatNumber minFractionDigits="2" value="${order.total}"></fmt:formatNumber></span></li>
+        <li>预计3天到达</li>
+    </ul>
 </div>
 </body>
 </html>

@@ -133,7 +133,12 @@
       <artifactId>c3p0</artifactId>
       <version>0.9.1.2</version>
     </dependency>
-
+    <!--alipay-sdk-->
+    <dependency>
+      <groupId>com.alipay.sdk</groupId>
+      <artifactId>alipay-sdk-java</artifactId>
+      <version>4.4.2.ALL</version>
+    </dependency>
   </dependencies>
 
   <build>

@@ -123,7 +123,7 @@ public class Order {
         this.confirmDate = confirmDate;
     }
 
-    public String getStatus() {
+   /* public String getStatusDesc() {
         String desc ="未知";
         switch(status){
             case OrderService.waitPay:
@@ -148,6 +148,10 @@ public class Order {
                 desc="未知";
         }
         return desc;
+    }*/
+
+    public String getStatus() {
+        return status;
     }
 
     public void setStatus(String status) {

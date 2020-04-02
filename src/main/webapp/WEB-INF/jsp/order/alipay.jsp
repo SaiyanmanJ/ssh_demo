@@ -16,7 +16,8 @@
 <div align="center">
     <span>${order.id}</span>
     <span>扫一扫付款(元)</span>
-    <span><fmt:formatNumber value="${total}" type="number" minFractionDigits="2"/></span>
+    <span><fmt:formatNumber value="${order.total}" type="number" minFractionDigits="2"/></span>
+    <a href="payedOrder?order.id=${order.id}&order.total=${order.total}"><button>立即支付</button></a>
 </div>
 </body>
 </html>

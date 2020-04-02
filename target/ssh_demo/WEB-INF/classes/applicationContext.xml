@@ -110,6 +110,7 @@
             <tx:method name="list*"  propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="manage*"  propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="create*"  propagation="REQUIRED" rollback-for="Exception"></tx:method>
+            <tx:method name="delivery*"  propagation="REQUIRED" rollback-for="Exception"></tx:method>
         </tx:attributes>
     </tx:advice>
     <aop:config>

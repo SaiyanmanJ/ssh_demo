@@ -72,7 +72,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         //判断该用户未创建订单的订单项/中的产品/和这次产品是否相同
         boolean haveSeamProduct=false;
         user = userDAO.get(uid);
-        List<OrderItem> orderItems = orderItemDAO.listByUser(user);
+        List<OrderItem> orderItems = orderItemDAO.listByUserWithNoOrder(user);
         if(!orderItems.isEmpty()){
             for(OrderItem oi:orderItems){
                 if(oi.getProduct().getId()==pid){

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface OrderDAO {
     public List<Order> list();
-    public List<Order> listByUser(User user);
+    public List<Order> listByUserWithoutDelete(User user);
     public Order get(int id);
     public void add(Order order);
     public void delete(Order order);

@@ -38,9 +38,10 @@
         <action name="*Order" class="OrderActionBean" method="{1}">
             <result name="listOrder">WEB-INF/jsp/order/listOrder.jsp</result>
             <result name="listOrderAction" type="redirect">listOrder</result>
-            <result name="alipayPage" type="redirect">alipayOrder?order.id=${order.id};total=${total}</result>
+            <result name="alipayPage" type="redirect">alipayOrder?order.id=${order.getId()}</result>
             <result name="alipay">WEB-INF/jsp/order/alipay.jsp</result>
             <result name="login">WEB-INF/jsp/user/loginUser.jsp</result>
+            <result name="payedPage">WEB-INF/jsp/order/payed.jsp</result>
         </action>
         <action name="*OrderItem" class="OrderItemActionBean" method="{1}">
             <result name="redirectBuy" type="redirect">buyOrderItem?oiids=${oiid}</result>

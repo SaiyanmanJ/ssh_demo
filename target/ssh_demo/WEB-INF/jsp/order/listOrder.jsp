@@ -51,7 +51,20 @@
 
             <td>
                 <button oid=${o.id} class="CheckOrderItems">查看详情</button>
-                <c:if test="${o.status=='待付'}">
+                <c:if test="${o.status=='waitConfirm' and !empty user}">
+                    <a href="confirmOrder?order.id=${o.id}">
+                        <button>确认收货</button>
+                    </a>
+                </c:if>
+                <c:if test="${o.status=='waitPay'}">
+                    <a href="deleteOrder?order.id=${o.id}">
+                        <button>删除</button>
+                    </a>
+                    <a href="alipayOrder?order.id=${o.id}">
+                        <button>付款</button>
+                    </a>
+                </c:if>
+                <c:if test="${o.status=='waitDelivery' and empty user}">
                     <a href="deliveryOrder?order.id=${o.id}">
                         <button type="button">发货</button>
                     </a>

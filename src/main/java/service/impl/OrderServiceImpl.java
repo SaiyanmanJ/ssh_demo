@@ -30,8 +30,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> listByUser(User user) {
-        return orderDAO.listByUser(userDAO.get(user.getId()));
+    public List<Order> listByUserWithoutDelete(User user) {
+        return orderDAO.listByUserWithoutDelete(user);
     }
 
     @Override
@@ -45,17 +45,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void delete(Order order) {
-        orderDAO.delete(order);
-    }
-
-    @Override
     public void update(Order order) {
         orderDAO.update(order);
     }
 
     @Override
-    public float createOrder(List<OrderItem> ois,User user) {
+    public Order createOrder(List<OrderItem> ois,User user) {
         String nowTime = String.valueOf(System.currentTimeMillis());
         String orderCode = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + nowTime.substring(nowTime.length()-4);
 
@@ -72,7 +67,8 @@ public class OrderServiceImpl implements OrderService {
             orderItemDAO.update(oi);
             total += oi.getProduct().getPrice()*oi.getNumber();
         }
-        return total;
+        order.setTotal(total);
+        return order;
     }
 
     @Override

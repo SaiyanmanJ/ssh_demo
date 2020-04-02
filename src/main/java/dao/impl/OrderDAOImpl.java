@@ -8,6 +8,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import pojo.Category;
 import pojo.Order;
 import pojo.User;
+import service.OrderService;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class OrderDAOImpl extends HibernateTemplate implements OrderDAO {
     }
 
     @Override
-    public List<Order> listByUser(User user) {
+    public List<Order> listByUserWithoutDelete(User user) {
         return (List<Order>) findByCriteria(DetachedCriteria.forClass(Order.class).add(Restrictions.eq("user",user)));
     }
 
