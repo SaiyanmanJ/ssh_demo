@@ -8,7 +8,6 @@
         <property name="userService" ref="userServiceImpl"></property>
     </bean>
 
-
     <bean name="productActionBean" scope="prototype" class="action.ProductAction">
         <property name="productService" ref="productServiceImpl"></property>
     </bean>
@@ -41,9 +40,12 @@
         <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
 
+    <bean name="alipayService" class="service.impl.AlipayServiceImpl"></bean>
+
     <bean name="OrderActionBean" class="action.OrderAction">
         <property name="orderService" ref="orderServiceImpl"></property>
         <property name="orderItemService" ref="orderItemServiceImpl"></property>
+        <property name="acsi" ref="alipayService"></property>
     </bean>
     <bean name="orderServiceImpl" class="service.impl.OrderServiceImpl">
         <property name="orderDAO" ref="orderDAOImpl"></property>

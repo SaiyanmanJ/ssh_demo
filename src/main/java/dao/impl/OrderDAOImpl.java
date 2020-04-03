@@ -5,16 +5,14 @@ import dao.OrderDAO;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.HibernateTemplate;
-import pojo.Category;
 import pojo.Order;
 import pojo.User;
-import service.OrderService;
 
 import java.util.List;
 
 public class OrderDAOImpl extends HibernateTemplate implements OrderDAO {
 
-    Order Order;
+    Order order;
 
     @Override
     public List<Order> list() {
@@ -51,11 +49,13 @@ public class OrderDAOImpl extends HibernateTemplate implements OrderDAO {
         return (List<Order>) findByCriteria(DetachedCriteria.forClass(Order.class).add(Restrictions.like("name",keyword)));
     }
 
-    public pojo.Order getOrder() {
-        return Order;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrder(pojo.Order order) {
-        Order = order;
+    public void setOrder(Order order) {
+        this.order = order;
     }
+
+
 }

@@ -58,7 +58,6 @@ public class OrderItemActon {
         }else{
             msg="已加入购物车";
         }
-        orderItems.clear();
         orderItems = orderItemService.add(product.getId(),user.getId(),num);
         product = productService.get(product.getId());
         return "infoProduct";
@@ -177,4 +176,5 @@ public class OrderItemActon {
     public void setOiid(int oiid) {
         this.oiid = oiid;
     }
+
 }
