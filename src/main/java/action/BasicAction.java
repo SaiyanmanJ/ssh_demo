@@ -9,6 +9,7 @@ public class BasicAction {
     UserService userService;
     User user;
     String msg;
+    String result;
     public String registerUser(){
         return "registerUser";
     }
@@ -71,5 +72,13 @@ public class BasicAction {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }

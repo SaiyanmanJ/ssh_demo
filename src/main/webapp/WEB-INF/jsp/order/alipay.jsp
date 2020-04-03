@@ -12,12 +12,13 @@
     <title>alipay</title>
 </head>
 <body>
-<h1 align="center">这里是支付页面</h1>
-<div align="center">
+<h1 align="center">正在召唤支付宝，请耐心等待</h1>
+<%--<div align="center">
     <span>${order.id}</span>
     <span>扫一扫付款(元)</span>
     <span><fmt:formatNumber value="${order.total}" type="number" minFractionDigits="2"/></span>
     <a href="payedOrder?order.id=${order.id}&order.total=${order.total}"><button>立即支付</button></a>
-</div>
+</div>--%>
+${result}
 </body>
 </html>

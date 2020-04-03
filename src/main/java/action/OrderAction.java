@@ -1,22 +1,24 @@
 package action;
 
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.opensymphony.xwork2.ActionContext;
-import dao.impl.OrderItemDAOImpl;
-import org.aspectj.weaver.ast.Or;
-import org.hibernate.collection.internal.PersistentIdentifierBag;
+import config.AlipayConfig;
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.dispatcher.StrutsRequestWrapper;
 import pojo.Order;
 import pojo.OrderItem;
 import pojo.Product;
 import pojo.User;
 import service.OrderItemService;
 import service.OrderService;
-import service.UserService;
+import service.impl.AlipayServiceImpl;
 
-import java.security.PublicKey;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
+
 
 public class OrderAction {
     OrderService orderService;
@@ -28,21 +30,43 @@ public class OrderAction {
     String msg;
     List<OrderItem> orderItems;
     OrderItemService orderItemService;
-
-
-    public String alipay(){
+    String result;
+    AlipayServiceImpl acsi;
+    public String alipay() throws AlipayApiException {
+        user = (User) ActionContext.getContext().getSession().get("user");
+        if(user==null){
+            msg="还没登录呢！";
+            return "home";
+        }else{
+            msg="";
+        }
+        float total = order.getTotal();
+        order = orderService.get(order.getId());
+        order.setTotal(total);
+        result=acsi.postAlipay(order.getOrderCode(),""+order.getTotal(),""+order.getCreateDate(),""+order.getTotalNumber());
         return "alipay";
     }
 
     public String payed(){
-        float total = order.getTotal();
-        order = orderService.get(order.getId());
-        if(order.getStatus().equals(OrderService.waitPay)){
-            order.setStatus(OrderService.waitDelivery);
-            order.setPayDate(new Date());
-            orderService.update(order);
+        /*支付宝验签*/
+        HttpServletRequest request = ServletActionContext.getRequest();
+        HttpServletResponse response = ServletActionContext.getResponse();
+        /*支付宝回调函数，验签*/
+        result = acsi.confirmResult(request,response);
+        if(result=="验签失败"){
+            msg = "支付失败，请重新支付";
+        }else{
+            float total = order.getTotal();
+            order = orderService.get(order.getId());
+            if(order.getStatus().equals(OrderService.waitPay)){
+                order.setStatus(OrderService.waitDelivery);
+                order.setPayDate(new Date());
+                orderService.update(order);
+            }
+            order.setTotal(total);
+            msg="支付成功";
         }
-        order.setTotal(total);
+
         return "payedPage";
     }
 
@@ -160,4 +184,19 @@ public class OrderAction {
         this.msg = msg;
     }
 
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public AlipayServiceImpl getAcsi() {
+        return acsi;
+    }
+
+    public void setAcsi(AlipayServiceImpl acsi) {
+        this.acsi = acsi;
+    }
 }

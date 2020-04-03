@@ -38,15 +38,17 @@
         <action name="*Order" class="OrderActionBean" method="{1}">
             <result name="listOrder">WEB-INF/jsp/order/listOrder.jsp</result>
             <result name="listOrderAction" type="redirect">listOrder</result>
-            <result name="alipayPage" type="redirect">alipayOrder?order.id=${order.getId()}</result>
+            <result name="alipayPage" type="redirect">alipayOrder?order.id=${order.getId()};order.total=${order.getTotal()}</result>
+<!--            <result name="alipayPage" >WEB-INF/jsp/order/alipay.jsp</result>-->
             <result name="alipay">WEB-INF/jsp/order/alipay.jsp</result>
             <result name="login">WEB-INF/jsp/user/loginUser.jsp</result>
             <result name="payedPage">WEB-INF/jsp/order/payed.jsp</result>
+            <result name="home">index.jsp</result>
         </action>
         <action name="*OrderItem" class="OrderItemActionBean" method="{1}">
             <result name="redirectBuy" type="redirect">buyOrderItem?oiids=${oiid}</result>
             <result name="buyPage">/WEB-INF/jsp/orderitem/buyPage.jsp</result>
-            <result name="infoProduct">WEB-INF/jsp/product/infoProduct.jsp</result>
+            <result name="infoProduct" type="redirect">infoProduct?product.id=${product.getId()}</result>
             <result name="cartPage">WEB-INF/jsp/orderitem/cartPage.jsp</result>
             <result name="deleteSuccess" type="redirect">cartOrderItem</result>
             <result name="home">index.jsp</result>
@@ -61,6 +63,9 @@
             <result name="loginError">WEB-INF/jsp/user/loginUser.jsp</result>
             <result name="loginSuccess">index.jsp</result>
             <result name="loginOut" type="redirect" >homeBasic</result>
+        </action>
+        <action name="*Alipay" class="action.AlipayAction">
+            <result name="return_url">WEB-INF/jsp/alipay/return_url.jsp</result>
         </action>
     </package>
 </struts>
